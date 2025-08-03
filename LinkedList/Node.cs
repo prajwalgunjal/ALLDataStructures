@@ -11,4 +11,10 @@ namespace LinkedList
         public int Value;
         public Node Nextnode;
     }
+    public class DoublyNode
+    {
+        public int Value;
+        public DoublyNode Nextnode;
+        public DoublyNode Previousnode;
+    }
 }
