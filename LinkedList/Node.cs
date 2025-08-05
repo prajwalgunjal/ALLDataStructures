@@ -12,11 +12,11 @@ namespace LinkedList
     {
         public int Value;
         public Node Nextnode;
-        public Node(int data)
+        /*public Node(int data)
         {
             Value = data;
             Nextnode = null;
-        }
+        }*/
     }
     public class DoublyNode
     {
