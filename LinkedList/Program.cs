@@ -2,6 +2,34 @@
 {
     public class Program
     {
+        /*
+            We create nodes and link them to form a list:
+            1 → 2 → 3 → 4 → 5 → null (initially)
+            Then we manually create a cycle by making node 5's Next point back to node 2:
+            5 → 2 which causes the list to loop infinitely.
+            We call HasCycle() to check if the list has a cycle.
+            It returns true because the cycle exists.
+            We print the result.
+            Floyd’s algorithm uses two pointers moving at different speeds to detect if they ever meet inside a cycle.
+       
+            Types of Linked list:- 
+            1) Singly Linked List eg: 1 -> 2 -> 3 -> 4 -> 5 -> null
+            2) Doubly Linked List eg: 1 <-> 2 <-> 3 <-> 4 <-> 5
+            3) Circular Linked List eg: 1 -> 2 -> 3 -> 4 -> 5 -> 1 (last node points to the first node)
+            4) Circular Doubly Linked List eg: 1 <-> 2 <-> 3 <-> 4 <-> 5 <-> 1 (last node points to the first node and vice versa)
+
+            Question :- 
+            "How would you find the middle element of a linked list?"
+            The "Slow and Fast" Pointer Approach (Floyd's Cycle-Finding Algorithm): 
+            Use two pointers, one (slow) that moves one step at a time, and another (fast) 
+            that moves two steps at a time. When the fast pointer reaches the end of the list, the slow pointer will be at the middle.
+
+            Question :-
+            "How do you reverse a singly linked list?"
+            Iterate through the list, changing the next pointer of each node to point 
+            to the previous node. Keep track of three pointers: previous, current, and next_node.
+            
+         */
         static void Main(string[] args)
         {
             do
