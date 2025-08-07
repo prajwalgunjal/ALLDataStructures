@@ -42,7 +42,7 @@ namespace LinkedList
     }
     class Floyd_s_Cycle_Finding
     {
-        static void Main()
+        public static void Floyd_s_Cycle_Finding_()
         {
             LinkedList list = new LinkedList();
             list.Head = new Node_(1);
