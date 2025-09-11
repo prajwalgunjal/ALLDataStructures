@@ -4,11 +4,31 @@
     {
         static void Main(string[] args)
         {
+            int[] arr = { 7, 1, 5, 3, 6, 4};
+            _ = MaxProfit(arr);
             Substring();
-            PairWithGivenSum([1, 2, 3, 4, 5],6);
+            _ = PairWithGivenSum([1, 2, 3, 4, 5],6);
             Console.WriteLine("Hello, World!");
         }
+        // Best time to buy and sell stock
+        public static int MaxProfit(int[] prices)
+        {
 
+            int minPrice = int.MaxValue;
+            int maxProfit = 0;
+            for (int i = 0; i < prices.Length; i++)
+            {
+                if (prices[i] < minPrice)
+                {
+                    minPrice = prices[i]; // Update buy price
+                }
+                else if (prices[i] - minPrice > maxProfit)
+                {
+                    maxProfit = prices[i] - minPrice; // Update profit
+                }
+            }
+            return maxProfit;
+        }
         public static void ReverseString(string Msg)
         {
             char[] charArray = Msg.ToCharArray();
@@ -118,34 +138,35 @@
             Console.WriteLine(MostFrequentChar);
         }
 
-        public static void PairWithGivenSum(int[] arr, int targetSum)
+        public static int[] PairWithGivenSum(int[] arr, int targetSum)
         {
-            HashSet<int> seenNumbers = new HashSet<int>(); 
-            // removing duplicate values
-            // sort full array 
-            // no need to sort array if we use hashset
-            // No Duplicate values
-            // find pair with given sum in array
-            // eg :- arr = [1,2,3,4,5] , targetSum = 6
-            var low = 0;
-            var high = arr.Length - 1;
-            while (low <= high)
+            // sort the array but dont loose index
+            var indexedArr = arr
+                .Select((value, index) => new { Value = value, Index = index })
+                .OrderBy(x => x.Value)
+                .ToArray();
+
+            int low = 0;
+            int high = indexedArr.Length - 1;
+            // traverse array
+            while (low < high)
             {
-                if (arr[low] + arr[high] >targetSum)
+                int sum = indexedArr[low].Value + indexedArr[high].Value;
+
+                if (sum == targetSum)
                 {
-                    high--;
+                    return new int[] { indexedArr[low].Index, indexedArr[high].Index };
                 }
-                else if (arr[low] + arr[high] < targetSum)
+                else if (sum < targetSum)
                 {
-                    low++;
+                    low++;// low ++ Because it is in sorted order 
                 }
                 else
                 {
-                    Console.WriteLine($"Pair with given sum {targetSum} is ({arr[low]},{arr[high]})");
-                    low++;
-                    high--;
+                    high--; // 
                 }
             }
+            throw new ArgumentException("No two sum solution");
         }
         public static void FindSquareRootOfNumber()
         {
