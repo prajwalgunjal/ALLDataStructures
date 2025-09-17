@@ -1,14 +1,43 @@
-﻿namespace DSAProblems
+﻿using System.Linq;
+
+namespace DSAProblems
 {
     internal class Program
     {
         static void Main(string[] args)
         {
+            //[7,1,5,3,6,4]
+            var ele = new int[] { 7, 1, 5, 3, 6, 4 };
+            var aaaa = MaxProfit_II(ele);
+            int[] nums = new int[] { 2, 1, 3, 1, 4 };
+            int ab = MajorityElement_mySol(nums);
+
             int[] arr = { 7, 1, 5, 3, 6, 4};
             _ = MaxProfit(arr);
             Substring();
             _ = PairWithGivenSum([1, 2, 3, 4, 5],6);
             Console.WriteLine("Hello, World!");
+        }
+        public static IList<int> MajorityElement_II(int[] nums)
+        {
+            Dictionary<int, int> Counter = new Dictionary<int, int>();
+            foreach (var i in nums)
+            {
+                if (Counter.ContainsKey(i))
+                {
+                    Counter[i]++;
+                }
+                else
+                {
+                    Counter[i] = 1;
+                }
+            }
+            int ThreshHold = nums.Length / 3;
+            // Filter only elements with count > n/3 and return the keys
+            return Counter.Where(pair => pair.Value > ThreshHold)
+                          .Select(pair => pair.Key)
+                          .ToList();
+
         }
         // Best time to buy and sell stock
         public static int MaxProfit(int[] prices)
@@ -28,6 +57,22 @@
                 }
             }
             return maxProfit;
+        }
+        // Best time to buy and Sell Stock Problem II
+        public static int MaxProfit_II(int[] prices)
+        {
+            //7,1,5,3,6,4
+            int totalProfit = 0;
+            for (int i = 1; i < prices.Length; i++)
+            {
+                // here sell is prices[i - 1] 
+                // and buy is prices[i]
+                if (prices[i] > prices[i - 1]) // sell price is getting compared with buy price 
+                {
+                    totalProfit += prices[i] - prices[i - 1];
+                }
+            }
+            return totalProfit;
         }
         public static void ReverseString(string Msg)
         {
@@ -137,7 +182,44 @@
             char MostFrequentChar = charCount.OrderByDescending(x => x.Value).First().Key;
             Console.WriteLine(MostFrequentChar);
         }
-
+        public static int MajorityElement_mySol(int[] nums)
+        {
+            Dictionary<int, int> IntCounter = new Dictionary<int, int>();
+            foreach (int c in nums)
+            {
+                if (IntCounter.ContainsKey(c))
+                    IntCounter[c]++;
+                else
+                    IntCounter[c] = 1;
+            }
+            int MostFrequentInt = IntCounter.OrderByDescending(x => x.Value).First().Key;
+            return MostFrequentInt;
+    }
+        public void MoveZeroes(int[] nums)
+        {
+            /*
+            Input: [0, 1, 0, 3, 12]
+            i = 0, j = 0: nums[0] == 0, do nothing
+            j = 1: nums[j] != 0 -> true -> nums[1] == 1 → swap with nums[0] → [1, 0, 0, 3, 12], i = 1
+            j = 2: nums[j] != 0 -> false -> nums[2] == 0, do nothing
+            j = 3: nums[j] != 0 -> true -> nums[3] == 3 → swap with nums[1] → [1, 3, 0, 0, 12], i = 2
+            j = 4: nums[j] != 0 -> false -> nums[4] == 12 → swap with nums[2] → [1, 3, 12, 0, 0], i = 3
+            */
+            int i = 0; // Pointer to place next non-zero
+            for (int j = 0; j < nums.Length; j++)
+            {
+                if (nums[j] != 0)
+                {// Swap nums[i] and nums[j] only if i != j to avoid unnecessary swaps
+                    if (i != j)
+                    {
+                        int temp = nums[i];
+                        nums[i] = nums[j];
+                        nums[j] = temp;
+                    }
+                    i++;
+                }
+            }
+        }
         public static int[] PairWithGivenSum(int[] arr, int targetSum)
         {
             // sort the array but dont loose index
