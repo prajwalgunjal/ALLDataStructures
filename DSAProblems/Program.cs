@@ -104,6 +104,40 @@ namespace DSAProblems
             Console.WriteLine("given string is Palimdorm");
             return;
         }
+
+            public bool IsPalindrome(string s)
+            {
+            /*
+            Example 1:
+                Input: s = "A man, a plan, a canal: Panama"
+                Output: true
+                Explanation: "amanaplanacanalpanama" is a palindrome.
+                
+            Example 2:
+                Input: s = "race a car"
+                Output: false
+                Explanation: "raceacar" is not a palindrome.
+            */
+            int start = 0;
+                int end = s.Length - 1;
+
+                while (start < end)
+                {
+                    // Skip non-alphanumeric characters
+                    while (start < end && !Char.IsLetterOrDigit(s[start])) start++;
+                    while (start < end && !Char.IsLetterOrDigit(s[end])) end--;
+
+                    // Compare characters (case-insensitive)
+                    if (Char.ToLower(s[start]) != Char.ToLower(s[end]))
+                    {
+                        return false;
+                    }
+
+                    start++;
+                    end--;
+                }
+                return true;
+            }
         public static void checkAnagram(string str1, string str2)
         {
             // if length of both string is not same then they are not anagram
