@@ -399,5 +399,46 @@ namespace DSAProblems
             }
             Console.WriteLine("Reversed array is : " + string.Join(", ", arr));
         }
+        public string ReverseWords(string s)
+        {
+            string[] arr = s.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string ReversedString = "";
+            int count = arr.Length - 1;
+            while (count >= 0)
+            {
+                ReversedString += arr[count] + " ";
+                count--;
+            }
+            return ReversedString.Trim();
+        }
+        public static int SingleNumber(int[] nums)
+        {
+            Dictionary<int,int> keyValuePairs = new Dictionary<int,int>();
+            int count = 0;
+            while (count >= nums.Length - 1)
+            {
+                if (keyValuePairs.ContainsKey(nums[count]))
+                {
+                    keyValuePairs[nums[count]]++;
+                }
+                else
+                {
+                    keyValuePairs[nums[count]] = 1;
+                }
+                count ++;
+            }
+            /*for (int i = 0; i < nums.Length; i++)
+            {
+                if (keyValuePairs.ContainsKey(nums[i]))
+                {
+                    keyValuePairs[nums[i]]++;
+                }
+                else
+                {
+                    keyValuePairs[nums[i]] =1;
+                }
+            }*/
+            return keyValuePairs.Where(x => x.Value == 1).First().Key;
+        }
     }
 }
