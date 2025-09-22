@@ -6,6 +6,12 @@ namespace DSAProblems
     {
         static void Main(string[] args)
         {
+            RemoveDuplicates_II("deeedbbcccbdaa" ,3);
+            RemoveDuplicates("abbaca");
+            int[] haha = new int[] { 2, 7, 11, 15 };
+            var aqwerty = TwoSum__II(haha,9);
+            int[] nums11 = new int[] { 3,0,1 };
+            Console.WriteLine(MissingNumber(nums11));
             //[7,1,5,3,6,4]
             var ele = new int[] { 7, 1, 5, 3, 6, 4 };
             var aaaa = MaxProfit_II(ele);
@@ -17,6 +23,60 @@ namespace DSAProblems
             Substring();
             _ = PairWithGivenSum([1, 2, 3, 4, 5],6);
             Console.WriteLine("Hello, World!");
+        }
+        public static string RemoveDuplicates_II(string s, int k)
+        {
+            List<char> chars = s.ToList();
+            for (int i = 0; i < chars.Count; i++) {
+                if(Enumerable.Range(1, k - 1).All(j => i + j < chars.Count && chars[i] == chars[i + j]))
+                {
+                    chars.RemoveRange(i,k);
+                    i = -1;
+                }
+            }
+            return new string(chars.ToArray());
+        }
+        public static string RemoveDuplicates(string s)
+        {
+            Stack<char> stack = new Stack<char>();
+            int start = 0;
+            while (start < s.Length)
+            {
+                if (stack.Count > 0 && stack?.Peek() == s[start])
+                    stack.Pop();
+                else
+                    stack.Push(s[start]);
+                start++;
+            }
+            List<char> res = new List<char>();
+            while (stack.Count != 0)
+            {
+                res.Add(stack.Pop());
+            }
+            res.Reverse();
+            return new string(res.ToArray());
+        }
+        public static int[] TwoSum__II(int[] numbers, int target)
+        {
+            int start = 0;
+            int end = numbers.Length - 1;
+            while (start < end)
+            {
+                var add = numbers[start] + numbers[end];
+                if (add == target)
+                {
+                    return new int[] { start, end };
+                }
+                if (add < target)
+                {
+                    start++;
+                }
+                else
+                {
+                    end--;
+                }
+            }
+            return new int[] { 0, 0 };
         }
         public static IList<int> MajorityElement_II(int[] nums)
         {
@@ -439,6 +499,60 @@ namespace DSAProblems
                 }
             }*/
             return keyValuePairs.Where(x => x.Value == 1).First().Key;
+        }
+
+        public static int MissingNumber(int[] nums)
+        {
+            // Array.Sort(nums);
+            // foreach (var i in nums)
+            // {
+            //     if(!nums.Contains(i+1)){
+            //         return i+1;
+            //     }
+            // }
+            // return 0;
+            // Time Complexity : O(n log n) -> foreach + nums.Contains(i + 1)
+            // space Complexity : O(1)
+            int n = nums.Length;
+            int expectedSum = n * (n + 1) / 2;
+            int actualSum = 0;
+            foreach (int num in nums)
+            {
+                actualSum += num;
+            }
+            return expectedSum - actualSum;
+            // Time Complexity : O(n) -> foreach
+            // space Complexity : O(1)
+            /*
+            int[] nums = {0, 1, 3}; // Missing number is 2
+            n = nums.Length = 3
+            So the numbers should be: 0, 1, 2, 3 → Total 4 numbers (0 to n)
+            But your array has only 3 of them → one is missing
+            Using the formula:
+            expectedSum = n * (n + 1) / 2
+                        = 3 * (3 + 1) / 2
+                        = 3 * 4 / 2
+                        = 12 / 2
+                        = 6
+            Now compute actual sum of array:
+            actualSum = 0 + 1 + 3 = 4
+            Missing number = expectedSum - actualSum = 6 - 4 = 2 ✅
+            */
+        }
+        public bool IsSubsequence(string s, string t)
+        {
+            s = "abc";
+            t = "ahbgdc";
+            char[] chars = s.ToCharArray();
+            char[] chars1 = t.ToCharArray();
+            foreach (var i in chars)
+            {
+                if (!chars1.Contains(i))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
