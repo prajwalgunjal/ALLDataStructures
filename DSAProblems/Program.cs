@@ -6,6 +6,7 @@ namespace DSAProblems
     {
         static void Main(string[] args)
         {
+            IsValid(")(){}");
             RemoveDuplicates_II("deeedbbcccbdaa" ,3);
             RemoveDuplicates("abbaca");
             int[] haha = new int[] { 2, 7, 11, 15 };
@@ -500,7 +501,43 @@ namespace DSAProblems
             }*/
             return keyValuePairs.Where(x => x.Value == 1).First().Key;
         }
+        public static bool IsValid(string s)
+        {
+            Stack<char> stack = new Stack<char>();
+            foreach (var c in s)
+            {
 
+                switch (c)
+                {
+                    case '(':
+                    case '{':
+                    case '[':
+                        stack.Push(c);
+                        break;
+
+                    case ')':
+                        if (stack.Count == 0 || stack.Peek() != '(')
+                            return false;
+                        stack.Pop();
+                        break;
+
+                    case '}':
+                        if (stack.Count == 0 || stack.Peek() != '{')
+                            return false;
+                        stack.Pop();
+                        break;
+
+                    case ']':
+                        if (stack.Count == 0 || stack.Peek() != '[')
+                            return false;
+                        stack.Pop();
+                        break;
+                }
+
+            }
+            return stack.Count == 0; // Must be empty if valid
+        }
+        
         public static int MissingNumber(int[] nums)
         {
             // Array.Sort(nums);
